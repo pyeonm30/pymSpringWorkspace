@@ -1,6 +1,7 @@
 package com.myspring.test;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -29,6 +30,9 @@ public class HomeController {
 	
 	@Autowired
 	_02UserDAO userDAO;
+	
+	@Autowired
+	_03ClientDAO clientDAO;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -50,6 +54,14 @@ public class HomeController {
 		System.out.println(">> 2단계 >>  ");
 		userDAO.print();
 		
+		System.out.println(">> 3단계 >>  ");
+		String schoolName = clientDAO.getSchoolName();
+		System.out.println("schoolName = " + schoolName);
+		
+		ArrayList<String> clist = clientDAO.getClientList();
+		for(String name: clist) {
+			System.out.println(name);
+		}
 		
 		return "home";  //"/WEB-INF/"+home+".jsp";
 	}
