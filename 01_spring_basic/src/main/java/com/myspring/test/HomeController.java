@@ -3,6 +3,8 @@ package com.myspring.test;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -61,6 +63,26 @@ public class HomeController {
 		ArrayList<String> clist = clientDAO.getClientList();
 		for(String name: clist) {
 			System.out.println(name);
+		}
+		
+		System.out.println("========================");
+		
+		HashMap<String, String> cMap1 = clientDAO.getClientMap1();
+		for(String key : cMap1.keySet()) {
+			System.out.println("key = " + key +" value=" + cMap1.get(key));
+		}
+		
+		System.out.println("========================");
+		
+		HashMap<String, _03Client> cMap2 = clientDAO.getClientMap2();
+//		for(String key : cMap2.keySet()) {
+//			System.out.println("key = " + key +" value=" + cMap2.get(key));
+//		}
+//		
+		Iterator<String> iter = cMap2.keySet().iterator();
+		while(iter.hasNext()) {
+			String key = iter.next();
+			System.out.println("key = " + key +" value=" + cMap2.get(key));
 		}
 		
 		return "home";  //"/WEB-INF/"+home+".jsp";

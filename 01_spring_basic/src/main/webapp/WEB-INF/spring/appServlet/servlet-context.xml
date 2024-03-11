@@ -56,6 +56,58 @@
             </beans:list>
         </beans:property>
         
+        	<beans:property name="clientMap1">
+			<beans:map>
+				<beans:entry>
+					<beans:key>
+						<beans:value>회원1</beans:value>
+					</beans:key>
+					<beans:value>박명수</beans:value>
+				</beans:entry>
+				<beans:entry>
+					<beans:key>
+						<beans:value>회원2</beans:value>
+					</beans:key>
+					<beans:value>유재석</beans:value>
+				</beans:entry>
+			</beans:map>
+		</beans:property>
+		
+		<beans:property name="clientMap2">
+			<beans:map>
+				<beans:entry>
+					<beans:key>
+						<beans:value>회원3</beans:value>
+					</beans:key>
+					<beans:ref bean="client3" />
+				</beans:entry>
+				<beans:entry>
+					<beans:key>
+						<beans:value>회원4</beans:value>
+					</beans:key>
+					<beans:ref bean="client4" />
+				</beans:entry>
+			</beans:map>
+		</beans:property>
+		
     	</beans:bean>
+    	
+    		<!-- 
+		_03Client client3 = new _03Client();
+		client3.setId("qwer");
+		client3.setPw("1234");
+		client3.setName("김철수");
+	 -->
+	<beans:bean id="client3" class="com.myspring.test._03Client">
+		<beans:property name="id" value="qwer" />
+		<beans:property name="pw" value="1234" />
+		<beans:property name="name" value="김철수" />
+	</beans:bean>
+	<beans:bean id="client4" class="com.myspring.test._03Client">
+		<beans:property name="id" value="abcd" />
+		<beans:property name="pw" value="1234" />
+		<beans:property name="name" value="이만수" />
+	</beans:bean>
+	
 	
 </beans:beans>

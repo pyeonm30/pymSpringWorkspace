@@ -23,6 +23,18 @@ public class _03ClientDAO {
 	public void setClientList(ArrayList<String> clientList) {
 		this.clientList = clientList;
 	}
+	public HashMap<String, String> getClientMap1() {
+		return clientMap1;
+	}
+	public void setClientMap1(HashMap<String, String> clientMap1) {
+		this.clientMap1 = clientMap1;
+	}
+	public HashMap<String, _03Client> getClientMap2() {
+		return clientMap2;
+	}
+	public void setClientMap2(HashMap<String, _03Client> clientMap2) {
+		this.clientMap2 = clientMap2;
+	}
 	
 
 }
