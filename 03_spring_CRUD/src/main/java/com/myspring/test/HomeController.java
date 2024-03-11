@@ -29,32 +29,32 @@ public class HomeController {
 		return "joinForm";
 	}
 	
-	/*
-	@RequestMapping(value = "/joinPro", method = RequestMethod.POST)
-	public String joinPro(HttpServletRequest request) {
-		
-		Member member = new Member();
-		member.setId(request.getParameter("id"));
-		member.setPw(request.getParameter("pw"));
-		member.setName(request.getParameter("name"));
-		
-		String[] arr = request.getParameterValues("hobby");
-		String hobby = "";
-		for(int i=0; i<arr.length; i++) {
-			hobby += arr[i];
-			if(i < arr.length - 1) {
-				hobby += ",";
-			}
-		}
-		member.setHobby(hobby);
-		
-		request.setAttribute("member", member);
-		
-		System.out.println(member);
-		
-		return "joinPro";
-	}
-	*/
+	
+//	@RequestMapping(value = "/joinPro", method = RequestMethod.POST)
+//	public String joinPro(HttpServletRequest request) {
+//		
+//		Member member = new Member();
+//		member.setId(request.getParameter("id"));
+//		member.setPw(request.getParameter("pw"));
+//		member.setName(request.getParameter("name"));
+//		
+//		String[] arr = request.getParameterValues("hobby");
+//		String hobby = "";
+//		for(int i=0; i<arr.length; i++) {
+//			hobby += arr[i];
+//			if(i < arr.length - 1) {
+//				hobby += ",";
+//			}
+//		}
+//		member.setHobby(hobby);
+//		
+//		request.setAttribute("member", member);
+//		
+//		System.out.println(member);
+//		
+//		return "joinPro";
+//	}
+	
 	
 	@RequestMapping(value = "/joinPro", method = {RequestMethod.GET, RequestMethod.POST})
 	public String joinPro(Member member, Model model) {
@@ -73,15 +73,14 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/loginPro", method = {RequestMethod.GET, RequestMethod.POST})
-	public String loginPro(HttpServletRequest request, HttpSession session) {
+	public String loginPro(Member member, Model model ,HttpSession session) {
 		
-		String id = request.getParameter("id");
-		String pw = request.getParameter("pw");
 		
-		request.setAttribute("id", id);
-		request.setAttribute("pw", pw);
+		//request.setAttribute("id", id);
+		//request.setAttribute("pw", pw);
 		
-		session.setAttribute("log", id);
+		model.addAttribute("member" , member);
+		session.setAttribute("log", member.getId());
 		
 		return "loginPro";
 	}
@@ -89,9 +88,9 @@ public class HomeController {
 	@RequestMapping(value = "/logOut", method = {RequestMethod.GET, RequestMethod.POST})
 	public String logOut(HttpSession session) {
 		
-		session.removeAttribute("log");
+		//session.removeAttribute("log");
 		
-		
+		session.invalidate();
 		return "logOut";
 	}
 	

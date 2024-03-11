@@ -8,9 +8,9 @@
 </head>
 <body>
 	<h1> LoginPro </h1>
-	log : ${sessionScope.log} <br>
-	id : ${id} <br>
-	pw : ${pw} <br>
+	log : ${log} <br>
+	id : ${member.id} <br>
+	pw : ${member.pw} <br>
 	
 	<a href="home">메인</a>
 </body>
