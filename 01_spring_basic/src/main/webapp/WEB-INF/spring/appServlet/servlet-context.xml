@@ -24,9 +24,16 @@
 	<context:component-scan base-package="com.myspring.test" />
 	
 	<!-- 이하 코드부터 직접 작성한 내용 -->
-	
+	<!-- _01Member member = new _01Member();-->
 	   <beans:bean id="member" class="com.myspring.test._01Member" />
 	
-	
+	<!-- 2단계 : 생성자를 이용한 DI기능 -->
+		<!-- _02User user = new _02User();-->
+    <beans:bean id="user" class="com.myspring.test._02User" />
+    
+         <!--  생성자 주입 -->     
+    <beans:bean id="userDAO" class="com.myspring.test._02UserDAO">
+        <beans:constructor-arg ref="user" />
+    </beans:bean> 
 	
 </beans:beans>

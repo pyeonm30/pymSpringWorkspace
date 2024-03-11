@@ -26,6 +26,9 @@ public class HomeController {
 	
 	@Autowired
 	_01Member test3;  // _01Member test2 = member;
+	
+	@Autowired
+	_02UserDAO userDAO;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -37,12 +40,15 @@ public class HomeController {
 		test1.getNum();
 		
 		System.out.println("test2의 주소 = " + test2);
-		System.out.println("test2의 주소 = " + test3);
+		System.out.println("test3의 주소 = " + test3);
 
 		test2.setNum(300);
 		
 		test2.getNum();
 		test3.getNum();
+		
+		System.out.println(">> 2단계 >>  ");
+		userDAO.print();
 		
 		
 		return "home";  //"/WEB-INF/"+home+".jsp";
