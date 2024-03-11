@@ -35,5 +35,26 @@
     <beans:bean id="userDAO" class="com.myspring.test._02UserDAO">
         <beans:constructor-arg ref="user" />
     </beans:bean> 
+    
+        <!-- 3단계 : setter를 이용한 DI 기능 -->
+    <!--
+        _03ClientDAO clientDAO = new _03ClientDAO();
+        clientDAO.setCompanyName("더조은컴퓨터아카데미");
+      -->
+    <beans:bean id="clientDAO" class="com.myspring.test._03ClientDAO">
+        <beans:property name="schoolName" value="더조은컴퓨터아카데미" />
+        
+        <!-- 
+            clientDAO.setClientList(new ArrayList<String, String>());
+            clientDAO.clientList.add("이세돌");
+            clientDAO.clientList.add("알파고");
+         -->
+        <beans:property name="clientList">
+            <beans:list>
+                <beans:value>이세돌</beans:value>
+                <beans:value>알파고</beans:value>
+            </beans:list>
+        </beans:property>
+    
 	
 </beans:beans>
