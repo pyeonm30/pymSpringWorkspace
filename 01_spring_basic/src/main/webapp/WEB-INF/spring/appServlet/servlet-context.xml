@@ -55,6 +55,7 @@
                 <beans:value>알파고</beans:value>
             </beans:list>
         </beans:property>
-    
+        
+    	</beans:bean>
 	
 </beans:beans>
