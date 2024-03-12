@@ -76,7 +76,7 @@ public class MemberController {
 	@GetMapping("/member/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "/";
+		return "/member/index";  // /WEB-INF/ /.jsp
 	}
 	
 	@GetMapping("/member/modifyForm")
@@ -87,11 +87,30 @@ public class MemberController {
 		if(session.getAttribute("log") != null) {
 			
 			Member member = memberDAO.getOneMember((String)session.getAttribute("log"));
-			model.addAttribute("member" , member)
+			model.addAttribute("member" , member);
 	    }
 		
 		
 		return "/member/modifyForm";
+	}
+	
+	@PostMapping("/member/modifyPro")
+	public String modifyPro(Member member , HttpSession session ) {
+		
+		if(session.getAttribute("log") == null) {
+			return "/member/index";
+		}
+		
+		System.out.println("modify Member = " + member);
+		member.setId((String)session.getAttribute("log"));
+		int check = memberDAO.updateMember(member);
+		if(check == 0 ) {
+			System.out.println(" 업데이트 실패 ");
+		}else {
+			System.out.println(" 업데이트 성공 ");
+		}
+	
+		return "redirect:/member/list";
 	}
 	
 
