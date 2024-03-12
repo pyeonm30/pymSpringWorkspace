@@ -118,7 +118,7 @@
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency> 
-		
+				<!-- db 관련된것!  -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>

@@ -20,6 +20,7 @@ public class BoardController{	// new BoardController();
 	
 	@Autowired
 	private BoardMapper mapper;
+	
 	@GetMapping("/")
 	public String main() {
 		return "template";
@@ -45,9 +46,9 @@ public class BoardController{	// new BoardController();
 		return "redirect:/boardList.do"; // redirect
 	}
 	@GetMapping("/boardContent.do")
-	public String boardContent(int idx, Model model) {
+	public String boardContent(@RequestParam int idx, Model model) {
 		Board vo=mapper.boardContent(idx);
-
+        vo.setContent(vo.getContent().replace("\n", "<br/>"));
 		mapper.boardCount(idx);
 		model.addAttribute("vo", vo); // ${vo.idx}...
 		return "boardContent"; // boardContent.jsp

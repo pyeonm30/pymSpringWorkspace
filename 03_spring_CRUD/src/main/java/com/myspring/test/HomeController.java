@@ -7,14 +7,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomeController {
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/")
 	public String home() {
 		
-		return "home";
+		return "home";  // /WEB-INF/views/ + home + ".jsp"
 	}
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
@@ -57,7 +58,7 @@ public class HomeController {
 	
 	
 	@RequestMapping(value = "/joinPro", method = {RequestMethod.GET, RequestMethod.POST})
-	public String joinPro(Member member, Model model) {
+	public String joinPro(@RequestParam Member member, Model model) {
 		
 		System.out.println(member);
 		

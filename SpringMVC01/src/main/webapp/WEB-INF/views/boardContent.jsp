@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<% pageContext.setAttribute("newLineChar", "\n"); %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +26,8 @@
           </tr>
           <tr>
             <td>내용</td>
-            <td>${fn:replace(vo.content,newLineChar,"<br/>")}</td>
+            <td>${vo.content}</td>
+     <%--        <td>${fn:replace(vo.content,newLineChar,"<br/>")}</td> --%>
           </tr>
           <tr>
             <td>작성자</td>
