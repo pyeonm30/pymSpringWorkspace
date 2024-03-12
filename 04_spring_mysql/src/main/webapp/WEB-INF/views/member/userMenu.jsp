@@ -22,6 +22,6 @@
 		<a href="#">탈퇴</a>							<br>
 	</c:if>
 	
-	<a href="${cp}/member/index">메인으로</a>			<br>
+	<a href="${cp}/">메인으로</a>			<br>
 </body>
 </html>
