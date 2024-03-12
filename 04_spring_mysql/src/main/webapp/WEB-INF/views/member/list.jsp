@@ -28,6 +28,6 @@
 	</c:forEach>
 	</table>
 	
-	<a href="${cp}/member/index">메인으로</a>			<br>
+	<a href="${cp}/">메인으로</a>			<br>
 </body>
 </html>

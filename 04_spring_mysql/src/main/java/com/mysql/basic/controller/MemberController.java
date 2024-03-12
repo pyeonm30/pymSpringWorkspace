@@ -27,7 +27,6 @@ public class MemberController {
 		return request.getContextPath();
 	}
 	
-	// get, post, put , delete 모든 값들이 허용가능하다 
 	@RequestMapping(value="/member/userMenu" , method = RequestMethod.GET)
 	public String userMenu() {
 		return "/member/userMenu";
