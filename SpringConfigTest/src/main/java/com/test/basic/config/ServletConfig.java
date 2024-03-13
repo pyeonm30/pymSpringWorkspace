@@ -1,4 +1,4 @@
-package kr.board.mvc2.config;
+package com.test.basic.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-// servlet-context.xml
+//servlet-context.xml
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.test.basic"})
@@ -29,3 +29,4 @@ public class ServletConfig implements WebMvcConfigurer{
 
 	
 }
+
