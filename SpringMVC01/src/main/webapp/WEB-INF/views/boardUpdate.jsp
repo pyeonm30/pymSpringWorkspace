@@ -18,7 +18,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">BOARD</div>
     <div class="panel-body">
-       <form action="../boardUpdate.do" method="post">
+       <form action="${cp}/boardUpdate.do" method="post">
          <input type="hidden" name="idx" value="${vo.idx}"/>
         <table class="table table-bordered">       
           <tr>
