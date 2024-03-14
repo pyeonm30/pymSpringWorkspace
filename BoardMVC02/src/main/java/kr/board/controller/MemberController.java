@@ -84,7 +84,6 @@ public class MemberController {
 			) {
 		System.out.println("m = " + m );
 		System.out.println(" === memRegister ===  ");
-		m.setMemPassword(memPassword1);
 		if(!m.nullValueCheck()) {
 			rttr.addFlashAttribute("msgType" ,"실패 메세지");
 			rttr.addFlashAttribute("msg" ,"모든 값을 넣어주세요 ");
