@@ -18,6 +18,12 @@ public class MainController {
 		return "index";  // /WEB-INF/views/ + index +".jsp
 	}
 	
+	@GetMapping("/boardMain.do")
+	public String main() {
+		return "board/main"; 
+	}
+	
+	
 	
 	// @ResponseBody 뷰리졸버가 실행하지 않고 순수 response 바디를 넘겨준다 
 	@GetMapping("/test")
