@@ -17,7 +17,7 @@ function registerCheck(cp) {
       return response.json();
     })
     .then((result) => {
-      console.log("result" , result)
+      console.log("result", result)
       if (result === 1) {
         kindOfModal('panel-success');
         changeMsg('사용할 수 있는 아이디입니다.');
@@ -32,7 +32,7 @@ function registerCheck(cp) {
     .catch((error) => {
       console.error('There was a problem with the fetch operation:', error);
     });
- 
+
 
 }
 
@@ -50,8 +50,10 @@ function passwordCheck() {
 function goInsert() {
   let form = document.forms['frm'];
   if (form.memAge.value < 1 || form.memAge.value > 100) {
-    return alert(' 올바른 나이 입력해주세요 ');
+    alert(' 올바른 나이 입력해주세요 ');
+    return false;
   }
+
   if (check) {
     document.forms['frm'].submit();
   } else {
@@ -63,6 +65,19 @@ function goInsert() {
 
 
 function goUpdate() {
-	// 실습
+
+  let form = document.forms['updateForm'];
+  if (form.memAge.value < 1 || form.memAge.value > 100) {
+    alert(' 올바른 나이 입력해주세요 ');
+    return false;
+  }
+
+  if (!form.memPassword1.value || !form.memPassword2.value) {
+    changeMsg('비밀번호 입력해주세요');
+    showModal();
+    return false;
+  }
+
+  form.submit();
+
 }
-  

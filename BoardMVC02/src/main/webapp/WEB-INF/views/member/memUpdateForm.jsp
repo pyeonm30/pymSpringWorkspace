@@ -21,7 +21,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">회원정보수정 양식</div>
     <div class="panel-body">
-      <form name="frm" action="${cp}/member/memUpdate.do" method="post">
+      <form name="updateForm" action="${cp}/member/memUpdate.do" method="post">
          <input type="hidden" id="memID" name="memID" value="${mvo.memID}"/>
          <input type="hidden" id="memPassword" name="memPassword" value=""/>
          <table class="table table-bordered" style="text-align: center; border: 1px solid #dddddd;">

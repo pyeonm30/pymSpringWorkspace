@@ -127,5 +127,53 @@ public class MemberController {
 		return member == null ? 1 : 0;
 	}
 	
+	@PostMapping("/memUpdate.do")  // @ModelAttribute  new Member(), setter
+	public String memUpdate( @ModelAttribute Member m, RedirectAttributes rttr ,
+		                      @RequestParam String memPassword1, String memPassword2, HttpSession session) {
 
+		if(!m.nullValueCheck()) {
+			rttr.addFlashAttribute("msgType" ,"실패 메세지");
+			rttr.addFlashAttribute("msg" ,"모든 값을 넣어주세요 ");
+			return "redirect:/member/memUpdateForm.do";
+		}
+		
+		if(!memPassword1.equals(memPassword2)) {
+			rttr.addFlashAttribute("msgType" ,"실패 메세지");
+			rttr.addFlashAttribute("msg" ,"패스워드 값이 서로 다릅니다 ");
+			return "redirect:/member/memUpdateForm.do";
+		}
+		
+		m.setMemPassword(memPassword2);
+		System.out.println("update m = " + m );
+		
+		int result = memberMapper.memUpdate(m);
+		if(result == 1) {
+			rttr.addFlashAttribute("msgType" ,"성공 메세지");
+			rttr.addFlashAttribute("msg" ,"회원 정보 수정완료  ");
+			
+			// 회원 정보업데이트 된 세션으로 재등록 
+			session.setAttribute("mvo", m);
+			
+			return "redirect:/";
+		}else {
+			rttr.addFlashAttribute("msgType" ,"실패 메세지");
+			rttr.addFlashAttribute("msg" ,"회원 정보 수정실패  ");
+			return "redirect:/member/memUpdateForm.do";
+		}
+
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -18,6 +18,11 @@
      values(#{memID},#{memPassword},#{memName},#{memAge},#{memGender},#{memEmail},#{memProfile})
   </insert>
   
+    <update id="memUpdate" parameterType="kr.board.entity.Member">
+     update members set memPassword=#{memPassword}, memName=#{memName}, 
+            memAge=#{memAge},memGender=#{memGender},memEmail=#{memEmail} 
+            where memID=#{memID}      
+  </update>
   
 
 </mapper>
