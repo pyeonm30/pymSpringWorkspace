@@ -29,9 +29,9 @@ public class BoardController {
 	@PostMapping("/boards")   //  Board 객체 --> @ModelAttribute(기본으로 적용되기때문에 )
 	public String addBoard(@RequestBody Board board) {
 		String msg =board.toString();
+		int result = boardMapper.boardInsert(board);
 		
-		
-		return msg;
+		return (result == 1 ? "게시글 추가 완료" : "게시글 추가 실패" ) + msg;
 	}
 	
 }

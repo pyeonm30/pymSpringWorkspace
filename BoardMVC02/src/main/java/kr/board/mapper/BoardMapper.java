@@ -9,4 +9,5 @@ import kr.board.entity.Board;
 @Mapper  // 기본생성자 -> setter()
 public interface BoardMapper {
 	public List<Board> getLists();
+	public int boardInsert(Board board);
  }
