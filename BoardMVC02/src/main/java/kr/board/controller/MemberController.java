@@ -35,6 +35,12 @@ public class MemberController {
 		return "member/memLoginForm";
 	}
 	
+	@GetMapping("/memUpdateForm.do")
+	public String UpdateForm() {
+		return "member/memUpdateForm";
+	}
+	
+	
 	// model 객체는 request 객체를 forward 할때만 값을 전달해준다 
 	// RedirectAttributes => redirect: 할때 값을 들고 가고 새로고침하면 값이 사라진다 
 	@PostMapping("/memLogin.do")
