@@ -3,6 +3,7 @@ package kr.board.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,6 +44,13 @@ public class BoardController {
 		Board board = boardMapper.boardContent(idx); //boardMapper.getLists();  // 조회할 값이 없으면 null 리턴 
 		return board;
 	}
+	
+	@DeleteMapping("/boards/{idx}")
+	public String deleteOneBoard(@PathVariable int idx) {
+		int result = boardMapper.boardDelete(idx);
+		return result == 1 ?"게시글 삭제 완료" : " 게시글 삭제 실패";
+	}
+	
 	
 	
 }
