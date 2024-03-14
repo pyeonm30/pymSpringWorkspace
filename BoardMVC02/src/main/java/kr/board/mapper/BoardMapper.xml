@@ -10,4 +10,8 @@
     values(#{memID},#{title},#{content},#{writer})
   </insert>
   
+    <select id="boardContent" resultType="kr.board.entity.Board">
+     select * from myboard where idx=#{idx}
+  </select>
+  
 </mapper>
