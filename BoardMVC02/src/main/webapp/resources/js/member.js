@@ -1,7 +1,7 @@
 let check = false;
 
 function registerCheck(cp) {
-/*
+
   let memID = document.getElementById('memID').value;
   if (!memID) {
     kindOfModal('panel-info');
@@ -17,6 +17,7 @@ function registerCheck(cp) {
       return response.json();
     })
     .then((result) => {
+      console.log("result" , result)
       if (result === 1) {
         kindOfModal('panel-success');
         changeMsg('사용할 수 있는 아이디입니다.');
@@ -31,8 +32,8 @@ function registerCheck(cp) {
     .catch((error) => {
       console.error('There was a problem with the fetch operation:', error);
     });
-    */
-    check = true;
+ 
+
 }
 
 function passwordCheck() {

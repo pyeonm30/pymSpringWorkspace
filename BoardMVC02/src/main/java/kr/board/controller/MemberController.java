@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.board.entity.Member;
@@ -78,11 +79,48 @@ public class MemberController {
 	}
 	
 	@PostMapping("/memRegister.do") //@ModelAttribute        // @RequestParam(value="memPassword1")
-	public String registerMember( Member m , String memPassword1 , String gmemPassword2) {
-		System.out.println("register m = " + m );
-		return "redirect:/";
+	public String registerMember( Member m , String memPassword1 , String memPassword2, 
+			RedirectAttributes rttr , HttpSession session 
+			) {
+		System.out.println("m = " + m );
+		System.out.println(" === memRegister ===  ");
+		m.setMemPassword(memPassword1);
+		if(!m.nullValueCheck()) {
+			rttr.addFlashAttribute("msgType" ,"실패 메세지");
+			rttr.addFlashAttribute("msg" ,"모든 값을 넣어주세요 ");
+			return "redirect:/member/memJoin.do";
+		}
+		if(!memPassword1.equals(memPassword2)) {
+			rttr.addFlashAttribute("msgType" ,"실패 메세지");
+			rttr.addFlashAttribute("msg" ,"패스워드 값이 서로 다릅니다 ");
+			return "redirect:/member/memJoin.do";
+		}
+		
+		m.setMemPassword(memPassword1);
+		m.setMemProfile(""); // 사진이 없다는 의미 
+		
+		int result = memberMapper.register(m);
+		if(result == 1) {
+			rttr.addFlashAttribute("msgType" ,"성공 메세지");
+			rttr.addFlashAttribute("msg" ,"회원가입 성공했습니다 ");
+			session.setAttribute("mvo", m);
+			return "redirect:/";
+		}else {
+			rttr.addFlashAttribute("msgType" ,"실패 메세지");
+			rttr.addFlashAttribute("msg" ," 회원가입 실패 다시시도해주세요 ");
+			return "redirect:/member/memJoin.do";
+		}
+
 	}
 	
+	
+	@GetMapping("/memRegisterCheck.do")
+	public @ResponseBody int memRegisterCheck( String memID ) {
+		System.out.println("memRegisterCheck memId = " + memID );
+		Member member = memberMapper.registerCheck(memID);
+		
+		return member == null ? 1 : 0;
+	}
 	
 
 }

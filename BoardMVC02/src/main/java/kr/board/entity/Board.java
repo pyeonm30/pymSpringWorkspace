@@ -1,8 +1,10 @@
 package kr.board.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class Board {
 	  private int idx; // 번호
 	  private String memID; // 회원ID

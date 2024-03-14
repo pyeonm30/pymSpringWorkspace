@@ -155,7 +155,13 @@
 			<version>1.18.12</version>
 			<scope>provided</scope>
          </dependency>
-	  	
+	  	<!-- json 형식으로 반환  -->
+	  	  	<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.8</version>
+		</dependency>  	
+  	    
 		    
 	</dependencies>
     <build>
