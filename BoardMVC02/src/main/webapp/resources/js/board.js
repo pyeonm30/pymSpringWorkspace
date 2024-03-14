@@ -87,3 +87,97 @@ function makeView(data, memID) {
   wfrom.style.display = "none";
 }
 
+function goForm() {
+  document.querySelector("#view").style.display = "none";
+  document.querySelector("#wfrom").style.display = "block";
+}
+
+function goList() {
+  document.querySelector("#view").style.display = "block";
+  document.querySelector("#wfrom").style.display = "none";
+}
+
+function goInsert() {
+  let form = document.getElementById("frm");
+  fetch("boards", {
+      method: "POST",
+      body: new URLSearchParams({ // 일반 객체를 form data형식으로 변환해주는 클래스  --> @ModelAttribute
+        memID: memID,
+        title: form.title.value,
+        content: form.content.value,
+        writer: form.writer.value
+      })
+    })
+    .then(loadList)
+    .catch(error => {
+      console.error("Error occurred while processing the request:", error);
+    });
+
+  document.querySelector("#fclear").click();
+}
+
+function goContent(idx) {
+  const contentRow = document.querySelector(`#c${idx}`);
+  if (contentRow.style.display === "none") {
+    fetch(`boards/${idx}`)
+      .then(response => response.json())
+      .then(data => {
+        document.querySelector(`#ta${idx}`).value = data.content; // textarea객체
+            document.querySelector(`#cnt${idx}`).textContent = data.count;// 조회수 증가 
+      })
+      .catch(error => {
+        console.error("Error occurred while processing the request:", error);
+      });
+
+    contentRow.style.display = "table-row";
+    document.querySelector(`#ta${idx}`).readOnly = true;
+  } else {
+    contentRow.style.display = "none";
+
+    fetch(`boards/${idx}`, {
+        method: "PUT",
+      })
+      .then(response => response.json())
+      .catch(error => {
+        console.error("Error occurred while processing the request:", error);
+      });
+  }
+}
+
+function goDelete(idx) {
+  fetch(`boards/${idx}`, {
+      method: "DELETE",
+    })
+    .then(loadList)
+    .catch(error => {
+      console.error("Error occurred while processing the request:", error);
+    });
+}
+
+function goUpdateForm(idx) {
+  document.querySelector(`#ta${idx}`).readOnly = false;
+
+  const title = document.querySelector(`#t${idx}`).textContent;
+  const newInput = `<input type='text' id='nt${idx}' class='form-control' value='${title}'/>`;
+  document.querySelector(`#t${idx}`).innerHTML = newInput;
+
+  const newButton = `<button class='btn btn-primary btn-sm' onclick='goUpdate(${idx})'>수정</button>`;
+  document.querySelector(`#ub${idx}`).innerHTML = newButton;
+}
+
+function goUpdate(idx) {
+  const title = document.querySelector(`#nt${idx}`).value;
+  const content = document.querySelector(`#ta${idx}`).value;
+
+  fetch("boards/" + idx, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify({ idx, title, content }),
+    })
+    .then(loadList)
+    .catch(error => {
+      console.error("Error occurred while processing the request:", error);
+    });
+}

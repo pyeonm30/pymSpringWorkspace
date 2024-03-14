@@ -28,11 +28,9 @@ public class BoardController {
 		List<Board> list = boardMapper.getLists();
 		return list;
 	}
-	
-	
 	                           // json 요청을 줄때는 @RequestBody 넣어야함!! 
 	@PostMapping("")   //  Board 객체 --> @ModelAttribute(기본으로 적용되기때문에 )
-	public String addBoard(@RequestBody Board board) {
+	public String addBoard(Board board) {
 		System.out.println("board = " + board );
 		String msg =board.toString();
 		int result = boardMapper.boardInsert(board);
@@ -42,7 +40,9 @@ public class BoardController {
 	
 	@GetMapping("/{idx}")  // 쿼리스트링은 ?idx=1 @RequestParam(기본값)
 	public Board getOneBoard( @PathVariable int idx){
+		boardMapper.boardCount(idx);
 		Board board = boardMapper.boardContent(idx); //boardMapper.getLists();  // 조회할 값이 없으면 null 리턴 
+
 		return board;
 	}
 	

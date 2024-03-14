@@ -57,6 +57,7 @@ public class BoardController{
 		@GetMapping("/{idx}")
 		public Board boardContent(@PathVariable("idx") int idx) {
 			Board vo=boardMapper.boardContent(idx);
+			
 			return vo; // vo->JSON
 		}
 		@PutMapping("/count/{idx}")
