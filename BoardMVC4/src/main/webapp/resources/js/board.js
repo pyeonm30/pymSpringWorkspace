@@ -1,6 +1,6 @@
 let memID = '';
 let csrfTokenValue= document.querySelector("#csrf").value;
-let csrfTokenName= document.querySelector("#csrf").name;
+let csrfTokenName= document.querySelector("#csrf").name; // _crsf
 
 function loadData(mvoID) {
   memID = mvoID;
@@ -148,7 +148,7 @@ function goContent(idx) {
 }
 
 function goDelete(idx) {
-  fetch(`boards/${idx}`, {
+  fetch(`boards/${idx}?${csrfTokenName}=${csrfTokenValue}`, {
       method: "DELETE",
     })
     .then(loadList)
@@ -156,6 +156,7 @@ function goDelete(idx) {
       console.error("Error occurred while processing the request:", error);
     });
 }
+
 
 function goUpdateForm(idx) {
   document.querySelector(`#ta${idx}`).readOnly = false;
@@ -172,7 +173,7 @@ function goUpdate(idx) {
   const title = document.querySelector(`#nt${idx}`).value;
   const content = document.querySelector(`#ta${idx}`).value;
 
-  fetch("boards/" + idx, {
+  fetch(`boards/${idx}?${csrfTokenName}=${csrfTokenValue}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
