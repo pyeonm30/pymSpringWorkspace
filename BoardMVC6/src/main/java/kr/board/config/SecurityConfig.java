@@ -22,6 +22,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		filter.setForceEncoding(true);
 		http.addFilterBefore(filter,CsrfFilter.class);	
 		
+		
+		// 시큐리티가 대신 실행하는 부분 넣기
+		http.authorizeRequests()
+		.antMatchers("/")
+		.permitAll()
+		.and()
+		.formLogin()
+		.loginPage("/member/memLoginForm.do")
+		.loginProcessingUrl("/member/memLogin.do")
+		.permitAll();
+		
 	}	
 	
 	// 암호화 <-> 복호화 

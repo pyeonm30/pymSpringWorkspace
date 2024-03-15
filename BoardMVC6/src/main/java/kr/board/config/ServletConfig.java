@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 //servlet-context.xml
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"kr.board"})
+@ComponentScan(basePackages = {"kr.board.controller"})
 public class ServletConfig implements WebMvcConfigurer{
 
 	@Override

@@ -24,10 +24,10 @@
     </resultMap>
 
 <!-- 권한 정보도 가져와야함 : join   -->
-<select id="memLogin" parameterType="kr.board.entity.Member" 
+<select id="memLogin" 
                         resultMap="memberMap">
        select * from mem_stbl mem LEFT OUTER JOIN mem_auth auth on
-       mem.memID=auth.memID where mem.memID=#{memID}
+       mem.memID=auth.memID where mem.memID=#{username}
   </select>
   
    <select id="registerCheck" resultType="kr.board.entity.Member">

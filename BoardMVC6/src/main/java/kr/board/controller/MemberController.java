@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +31,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import kr.board.entity.AuthVO;
 import kr.board.entity.Member;
 import kr.board.mapper.MemberMapper;
+import kr.board.security.MemberUserDetailsService;
 
 @RequestMapping("/member")
 @Controller
@@ -38,6 +42,9 @@ public class MemberController {
 	
 	@Autowired
 	PasswordEncoder pwEncoder; // 암호화 할 수있는 객체 
+	
+	@Autowired
+	MemberUserDetailsService memberUserDetailsService;
 	
 	@ModelAttribute("cp")
 	public String getContextPath(Model model , HttpServletRequest request) {		
@@ -55,46 +62,6 @@ public class MemberController {
 		return "member/memUpdateForm";
 	}
 	
-	
-	// model 객체는 request 객체를 forward 할때만 값을 전달해준다 
-	// RedirectAttributes => redirect: 할때 값을 들고 가고 새로고침하면 값이 사라진다 
-	@PostMapping("/memLogin.do")
-	public String memLogin( @ModelAttribute Member m , RedirectAttributes rttr , HttpSession session){
-		
-		System.out.println("memLogin m = " + m );
-		if(m.getMemID() == null || m.getMemID().equals("")||
-				m.getMemPassword() == null || m.getMemPassword().equals("")  ) {
-			rttr.addFlashAttribute("msgType" ," 로그인 실패");
-			rttr.addFlashAttribute("msg" ,"모든 값을 넣어주세요 ");
-			return "redirect:/member/memLoginForm.do";
-		}
-		
-		
-		Member mvo = memberMapper.memLogin(m); // 암호화된 패스워드 
-		if(mvo == null) {
-			rttr.addFlashAttribute("msgType" ," 로그인 실패");
-			rttr.addFlashAttribute("msg" ,"로그인 정보가 없습니다 ");
-			
-			return "redirect:/member/memLoginForm.do";
-		}
-
-		// db 암호화 코드 == 사용자 입력한 암호화 코드 비교 
-		                   //    암호화 전 패스워드          암호화 패스워드
-		                      // 1234                 123adsfsdf//sdaf
-		if(pwEncoder.matches(m.getMemPassword(), mvo.getMemPassword())) {
-			// 로그인 성공 
-			session.setAttribute("mvo", mvo);
-			rttr.addFlashAttribute("msgType" ,"성공 메세지");
-			rttr.addFlashAttribute("msg" ,"로그인 성공 했습니다  ");
-		}else {
-			rttr.addFlashAttribute("msgType" ,"실패 메세지");
-			rttr.addFlashAttribute("msg" ,"비밀번호 불일치  ");
-			return "redirect:/member/memLoginForm.do";
-		}
-	
-		
-		return "redirect:/";
-	}
 	@GetMapping("/memLogout.do")
 	public String logout(HttpSession session, RedirectAttributes rttr) {
 		rttr.addFlashAttribute("msgType" ,"성공 메세지");
@@ -308,14 +275,17 @@ public class MemberController {
 
 			e.printStackTrace();
 		}
-		
-		
-		
+
 		
 		return "redirect:/";
 	}
 	
-	
+    protected Authentication createNewAuthentication(Authentication currentAuth, String username) {
+        UserDetails newPrincipal = memberUserDetailsService.loadUserByUsername(username);
+        UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(newPrincipal, currentAuth.getCredentials(), newPrincipal.getAuthorities());
+        newAuth.setDetails(currentAuth.getDetails());        
+        return newAuth;
+ }
 	
 	
 	
