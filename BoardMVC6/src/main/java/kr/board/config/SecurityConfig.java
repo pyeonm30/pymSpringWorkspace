@@ -46,8 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.formLogin()
 		.loginPage("/member/memLoginForm.do")
 		.loginProcessingUrl("/member/memLogin.do")
-		.permitAll();
-		
+		.permitAll()
+		.and()
+		.logout()
+		.invalidateHttpSession(true)
+		.logoutSuccessUrl("/");
 		
 	}	
 	

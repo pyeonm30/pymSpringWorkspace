@@ -1,10 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>   
 <c:set var="cp" value="${pageContext.request.contextPath}"/>
 <c:set var="mvo" value="${SPRING_SECURITY_CONTEXT.authentication.principal}"/> 
 <c:set var="auth" value="${SPRING_SECURITY_CONTEXT.authentication.authorities}"/> 
 
+<script>
+	let csrfHeaderName = "${_csrf.headerName}";
+	let csrfTokenValue = "${_csrf.token}";
+	function logout(){
+	  	$.ajax({
+	  		url : "${cp}/logout",
+	  		type: "post", // insert    	
+	  		beforeSend: function(xhr){
+	              xhr.setRequestHeader(csrfHeaderName, csrfTokenValue)
+	          },
+	  		success : function(){
+	  			location.href="${cp}/";
+	  		},
+	  		error : function(){ alert("error");}    		
+	  	}); 
+	}
+
+</script>
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -21,7 +40,7 @@
         <li class="active"><a href="${cp}/">Home</a></li>
         <li><a href="${cp}/boardMain.do">게시판</a></li>            
       </ul>
-        <security:authorize access="isAnonymous()">
+     <security:authorize access="isAnonymous()">
 	      <ul class="nav navbar-nav navbar-right">
 	            <li><a href="${cp}/member/memLoginForm.do"><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
 	            <li><a href="${cp}/member/memJoin.do"><span class="glyphicon glyphicon-user"></span> 회원가입</a></li>            
@@ -29,9 +48,9 @@
       </security:authorize>
       <security:authorize access="isAuthenticated()">
 	      <ul class="nav navbar-nav navbar-right">
-	            <li><a href="${cp}/memUpdateForm.do"><span class="glyphicon glyphicon glyphicon-wrench"></span> 회원정보수정</a></li>
-	            <li><a href="${cp}/memImageForm.do"><span class="glyphicon glyphicon glyphicon-picture"></span> 사진등록</a></li>
-	            <li><a href="javascript:logout('${cp}')"><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a></li>            
+	            <li><a href="${cp}/member/memUpdateForm.do"><span class="glyphicon glyphicon glyphicon-wrench"></span> 회원정보수정</a></li>
+	            <li><a href="${cp}/member/memImageForm.do"><span class="glyphicon glyphicon glyphicon-picture"></span> 사진등록</a></li>
+	            <li><a href="javascript:logout()"><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a></li>            
 	            <c:if test="${empty mvo.member.memProfile}">
 			      <li><img class="img-circle" src="${contextPath}/resources/images/person.PNG" style="width: 50px; height: 50px"/>
 			    </c:if>

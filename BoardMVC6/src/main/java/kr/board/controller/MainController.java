@@ -2,12 +2,15 @@ package kr.board.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.board.entity.Member;
+import kr.board.entity.MemberUser;
 
 @Controller
 public class MainController {
@@ -28,7 +31,10 @@ public class MainController {
 	// @ResponseBody 뷰리졸버가 실행하지 않고 순수 response 바디를 넘겨준다 
 	@GetMapping("/test")
 	public @ResponseBody String test() {
-		return "<h1>test</h1>"; 
+		
+		   Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+  
+		return  authentication.toString(); 
 	}
 	@GetMapping("/test2")
 	public String test2() {
