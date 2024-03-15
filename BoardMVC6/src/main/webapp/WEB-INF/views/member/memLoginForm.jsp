@@ -11,6 +11,17 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
    <script defer src="${cp}/resources/js/modal.js"></script>
+   <script>
+   $(document).ready(function(){
+	   alert('test');
+ 	if(${param.error!=null}){
+ 		$("#messageType").attr("class", "modal-content panel-warning");
+    		$(".modal-body").text("아이디와 비밀번호를 확인해주세요");
+    		$(".modal-title").text("실패 메시지");
+   		$("#myMessage").modal("show");
+ 	}
+   });
+   </script>
 </head>
 <body onload="actionModal('${msgType}' ,'${msg}' )" >
 <div class="container">
