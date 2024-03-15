@@ -24,5 +24,14 @@
             where memID=#{memID}      
   </update>
   
+     <select id="getMember" resultType="kr.board.entity.Member">
+    select * from members where memID=#{memID}
+  </select>
+  
+    <update id="memProfileUpdate" parameterType="kr.board.entity.Member">
+     update members set memProfile=#{memProfile}
+            where memID=#{memID}      
+  </update>
+  
 
 </mapper>

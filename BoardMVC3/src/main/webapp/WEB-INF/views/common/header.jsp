@@ -34,7 +34,7 @@
 			      <li style="height: 60px; line-height: 60px;" >${mvo.memName} 님 </li>
 			    </c:if>
 			    <c:if test="${!empty mvo.memProfile}">
-			      <li><img class="img-circle profile-img" src="/resources/upload/${mvo.memProfile}" style="width: 40px; height: 40px" /> ${mvo.memName} 님</li>
+			      <li><img class="img-circle profile-img" src="resources/upload/${mvo.memProfile}" style="width: 40px; height: 40px" /> ${mvo.memName} 님</li>
 			    </c:if>			  
 			  </c:if>
 	      </ul>

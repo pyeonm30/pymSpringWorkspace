@@ -179,11 +179,12 @@ public class MemberController {
 	}
 	
 	@PostMapping("/memImageUpdate.do")
-	public String memImageUpdate(HttpServletRequest request) {
+	public String memImageUpdate(HttpServletRequest request,HttpSession session, RedirectAttributes rttr) {
 		MultipartRequest multi = null;
 		int fileMaxSize = 10*1024*1024; // 10MB
 		String savePath = request.getSession().getServletContext().getRealPath("resources/upload");
 		Path uploadDirectory = Paths.get(savePath);
+		int result = 0;
 		if(!Files.exists(uploadDirectory)) { // 업로드 폴더 없으면 생성 
 			try {
 				Files.createDirectory(uploadDirectory);
@@ -197,13 +198,56 @@ public class MemberController {
 			multi = new MultipartRequest(request, savePath, fileMaxSize, "UTF-8" , new DefaultFileRenamePolicy());
 			
 			String memID = multi.getParameter("memID");
+			Member mvo = memberMapper.getMember(memID);
+			if(mvo == null) {
+				return "redirect:/";
+			}
+	
+			
 			File file = multi.getFile("memProfile");
 			if(file.exists()) {
 				System.out.println("저장완료 ");
 				System.out.println("저장 경로 " + savePath);
+				
+				
+				String ext = file.getName().substring(file.getName().lastIndexOf(".")+1);
+				ext = ext.toUpperCase(); // png, PNG, jpg, JPG,
+					
+				// 이미지 확장자 아니면 되돌아가기 
+				if(!(ext.equals("PNG") || ext.equals("JPG"))){
+					
+					rttr.addFlashAttribute("msgType" ,"실패 메세지");
+					rttr.addFlashAttribute("msg" ," 이미지 사진만 업로드 가능합니다  ");
+					return "redirect:/member/memImageForm.do";
+					
+				}
+				
+				String newProfile =file.getName(); // 현재 업로드한 파일 이름  
+				String oldProfile= mvo.getMemProfile(); // 기존 이미지 파일 이름 
+				
+				// 기존에 이미지 파일이 있다면 삭제 
+				File oldFile = new File(savePath +"/" + oldProfile);
+				
+				if(oldFile.exists()) {
+					oldFile.delete();
+				}
+				
+				mvo.setMemProfile(newProfile);
+				result = memberMapper.memProfileUpdate(mvo);
+				System.out.println("이미지 업로드 mvo = " + mvo );
+				
 			}
 			
-			
+			// db 이미지 업로드 성공 후
+			if(result == 1) {
+				session.setAttribute("mvo", mvo);
+				
+				rttr.addFlashAttribute("msgType" ,"성공 메세지");
+				rttr.addFlashAttribute("msg" ," 이미지 등록 성공  ");
+				return "redirect:/";
+				
+			}
+	
 		} catch (IOException e) {
 
 			e.printStackTrace();
