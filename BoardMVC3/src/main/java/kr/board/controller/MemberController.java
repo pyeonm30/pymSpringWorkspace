@@ -164,7 +164,11 @@ public class MemberController {
 	}
 
 	
-	
+	// 회원 사진 등록 
+	@GetMapping("/memImageForm.do")
+	public String memImageForm() {
+		return "/member/memImageForm";
+	}
 	
 	
 	

@@ -26,6 +26,7 @@
       <c:if test="${!empty mvo}">
 	      <ul class="nav navbar-nav navbar-right">
 	            <li><a href="${cp}/member/memUpdateForm.do"><span class="glyphicon glyphicon glyphicon-wrench"></span> 회원정보수정</a></li>
+	            <li><a href="${cp}/member/memImageForm.do"><span class="glyphicon glyphicon glyphicon-picture"></span> 사진등록</a></li> 
 	            <li><a href="${cp}/member/memLogout.do"><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a></li>            
 	            <c:if test="${!empty mvo}">
 			    <c:if test="${empty mvo.memProfile}">
@@ -33,7 +34,7 @@
 			      <li style="height: 60px; line-height: 60px;" >${mvo.memName} 님 </li>
 			    </c:if>
 			    <c:if test="${!empty mvo.memProfile}">
-			      <li><img class="img-circle profile-img" src="${cp}/resources/upload/${mvo.memProfile}" style="width: 40px; height: 40px" /> ${mvo.memName} 님</li>
+			      <li><img class="img-circle profile-img" src="resources/upload/${mvo.memProfile}" style="width: 40px; height: 40px" /> ${mvo.memName} 님</li>
 			    </c:if>			  
 			  </c:if>
 	      </ul>
