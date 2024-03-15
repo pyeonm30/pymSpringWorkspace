@@ -1,5 +1,9 @@
 package kr.board.entity;
 
+
+
+import java.util.List;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +18,8 @@ public class Member {
 	  private String memGender;
 	  private String memEmail;
 	  private String memProfile; //사진정보
+	  
+	  private List<AuthVO> authList;
 	  
 	  public boolean nullValueCheck() {
 		  if(memID == null || memID.equals("") ) return false;
