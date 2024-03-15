@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import kr.board.entity.AuthVO;
 import kr.board.entity.Member;
+import kr.board.entity.MemberUser;
 import kr.board.mapper.MemberMapper;
 import kr.board.security.MemberUserDetailsService;
 
@@ -61,16 +63,7 @@ public class MemberController {
 	public String UpdateForm() {
 		return "member/memUpdateForm";
 	}
-	
-	@GetMapping("/memLogout.do")
-	public String logout(HttpSession session, RedirectAttributes rttr) {
-		rttr.addFlashAttribute("msgType" ,"성공 메세지");
-		rttr.addFlashAttribute("msg" ,"로그아웃 되었습니다  ");
-		session.invalidate();
-		return "redirect:/";
-	
-	}
-	
+
 	@GetMapping("/memJoin.do")
 	public String memberJoin() {
 		return "member/join";
@@ -121,8 +114,9 @@ public class MemberController {
 			
 			rttr.addFlashAttribute("msgType" ,"성공 메세지");
 			rttr.addFlashAttribute("msg" ,"회원가입 성공했습니다 ");
-			session.setAttribute("mvo", m);
-			return "redirect:/";
+			// session.setAttribute("mvo", m);
+			
+			return "redirect:/member/memLoginForm.do";
 		}else {
 			rttr.addFlashAttribute("msgType" ,"실패 메세지");
 			rttr.addFlashAttribute("msg" ," 회원가입 실패 다시시도해주세요 ");
@@ -183,7 +177,12 @@ public class MemberController {
 			}
 			
 			// 회원 정보업데이트 된 세션으로 재등록 
-			session.setAttribute("mvo", m);
+		//	session.setAttribute("mvo", m);
+			
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			MemberUser userAccount = (MemberUser)authentication.getPrincipal();
+			SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(authentication, userAccount.getMember().getMemID()));
+			
 			
 			return "redirect:/";
 		}else {
@@ -263,7 +262,12 @@ public class MemberController {
 			
 			// db 이미지 업로드 성공 후
 			if(result == 1) {
-				session.setAttribute("mvo", mvo);
+				//session.setAttribute("mvo", mvo);
+				
+                // 새로운 인증 세션을 생성 
+				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+				MemberUser userAccount = (MemberUser)authentication.getPrincipal();
+				SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(authentication, userAccount.getMember().getMemID()));
 				
 				rttr.addFlashAttribute("msgType" ,"성공 메세지");
 				rttr.addFlashAttribute("msg" ," 이미지 등록 성공  ");

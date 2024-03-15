@@ -5,15 +5,16 @@
 <c:set var="mvo" value="${SPRING_SECURITY_CONTEXT.authentication.principal}"/> 
 <c:set var="auth" value="${SPRING_SECURITY_CONTEXT.authentication.authorities}"/> 
 
+
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"> 게시판 </span>
-        <span class="icon-bar"> 공지사항 </span>
-        <span class="icon-bar"> 내정보 </span>                        
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="${cp}/">스프링 mvc2</a>
+      <a class="navbar-brand" href="${cp}/">스프링 mvc6</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">

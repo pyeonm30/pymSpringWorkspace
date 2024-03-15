@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.loginProcessingUrl("/member/memLogin.do")
 		.permitAll();
 		
+		
 	}	
 	
 	// 암호화 <-> 복호화 
