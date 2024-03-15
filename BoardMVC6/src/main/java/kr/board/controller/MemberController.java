@@ -196,12 +196,14 @@ public class MemberController {
 	// 회원 사진 등록 
 	@GetMapping("/memImageForm.do")
 	public String memImageForm() {
+
 		return "/member/memImageForm";
 	}
 	
 	
 	@PostMapping("/memImageUpdate.do")
 	public String memImageUpdate(HttpServletRequest request,HttpSession session, RedirectAttributes rttr) {
+		System.out.println("ttttt");
 		MultipartRequest multi = null;
 		int fileMaxSize = 10*1024*1024; // 10MB
 		String savePath = request.getSession().getServletContext().getRealPath("resources/upload");

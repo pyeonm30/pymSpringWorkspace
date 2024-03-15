@@ -52,10 +52,10 @@
 	            <li><a href="${cp}/member/memImageForm.do"><span class="glyphicon glyphicon glyphicon-picture"></span> 사진등록</a></li>
 	            <li><a href="javascript:logout()"><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a></li>            
 	            <c:if test="${empty mvo.member.memProfile}">
-			      <li><img class="img-circle" src="${contextPath}/resources/images/person.PNG" style="width: 50px; height: 50px"/>
+			      <li><img class="img-circle" src="${cp}/resources/images/person.PNG" style="width: 50px; height: 50px"/>
 			    </c:if>
 			    <c:if test="${!empty mvo.member.memProfile}">
-			      <li><img class="img-circle" src="${contextPath}/resources/upload/${mvo.member.memProfile}" style="width: 50px; height: 50px"/>
+			      <li><img class="img-circle" src="${cp}/resources/upload/${mvo.member.memProfile}" style="width: 50px; height: 50px"/>
 			    </c:if>
 			     ${mvo.member.memName} 
 			     (

@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,11 +23,11 @@
     <div class="panel-heading">회원사진등록양식</div>
     <div class="panel-body">
          <form action="${cp}/member/memImageUpdate.do?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
-         <input type="hidden" name="memID" value="${mvo.memID}"/>
+         <input type="hidden" name="memID" value="<security:authentication property="principal.member.memID"/>"/>
          <table class="table table-bordered" style="text-align: center; border: 1px solid #dddddd;">
            <tr>
              <td style="width: 110px; vertical-align: middle;">아이디</td>
-             <td>${mvo.memID}</td>
+             <td><security:authentication property="principal.member.memID"/></td>
            </tr>
            <tr>
              <td style="width: 110px; vertical-align: middle;">사진 업로드</td>
