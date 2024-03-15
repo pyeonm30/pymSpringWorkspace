@@ -122,6 +122,7 @@ public class MemberController {
 		String encyptPw= pwEncoder.encode(m.getMemPassword());
 		System.out.println("encyptPw = " + encyptPw);
 		
+		// 암호화한 패스워드 다시 객체에 넣기 
 		m.setMemPassword(encyptPw);
 		
 		// 멤버회원 추가 됨 
