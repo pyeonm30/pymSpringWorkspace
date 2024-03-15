@@ -64,10 +64,8 @@ public class MemberController {
 		System.out.println("memLogin m = " + m );
 		if(m.getMemID() == null || m.getMemID().equals("")||
 				m.getMemPassword() == null || m.getMemPassword().equals("")  ) {
-			
 			rttr.addFlashAttribute("msgType" ," 로그인 실패");
 			rttr.addFlashAttribute("msg" ,"모든 값을 넣어주세요 ");
-			
 			return "redirect:/member/memLoginForm.do";
 		}
 		
@@ -79,11 +77,10 @@ public class MemberController {
 			
 			return "redirect:/member/memLoginForm.do";
 		}
-		
-		// 사용자가 입력받은 값을 다시 암호화 
-		pwEncoder.encode(m.getMemPassword());
-		
+
 		// db 암호화 코드 == 사용자 입력한 암호화 코드 비교 
+		                   //    암호화 전 패스워드          암호화 패스워드
+		                      // 1234                 123adsfsdf//sdaf
 		if(pwEncoder.matches(m.getMemPassword(), mvo.getMemPassword())) {
 			// 로그인 성공 
 			session.setAttribute("mvo", mvo);
