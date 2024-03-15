@@ -179,7 +179,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/memImageUpdate.do")
-	public String memImageUpdate(HttpServletRequest request, HttpSession session, RedirectAttributes rttr) {
+	public String memImageUpdate(HttpServletRequest request) {
 		MultipartRequest multi = null;
 		int fileMaxSize = 10*1024*1024; // 10MB
 		String savePath = request.getSession().getServletContext().getRealPath("resources/upload");

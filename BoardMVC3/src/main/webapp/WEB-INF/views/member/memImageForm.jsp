@@ -15,7 +15,7 @@
 </head>
 <body onload="actionModal('${msgType}' ,'${msg}' )" >
 <div class="container">
-  <jsp:include page="${cp}/common/header.jsp"/> 
+  <jsp:include page="../common/header.jsp"/> 
   <h2>Spring MVC03</h2>
   <div class="panel panel-default">
     <div class="panel-heading">회원사진등록양식</div>
