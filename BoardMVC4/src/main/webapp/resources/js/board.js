@@ -43,7 +43,7 @@ function makeView(data, memID) {
     listHtml += `
             <tr>
                 <td>${obj.idx}</td>
-                <td id='t${obj.idx}'><a href='javascript:goContent(${obj.idx})'>${obj.title}</a></td>
+                <td id='t${obj.idx}'><a href='javascript:goContent(${obj.idx})'><c:out value='${obj.title}'/> </a></td>
                 <td>${obj.writer}</td>
                 <td>${obj.indate.split(' ')[0]}</td>
                 <td id='cnt${obj.idx}'>${obj.count}</td>
