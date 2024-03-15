@@ -114,10 +114,14 @@ public class MemberController {
 			return "redirect:/member/memJoin.do";
 		}
 		
-		m.setMemPassword(memPassword1);
+		m.setMemPassword(memPassword1); // 암호화 전 페스워드 
 		m.setMemProfile(""); // 사진이 없다는 의미 
 		
-		int result = memberMapper.register(m);
+		String encyptPw= pwEncoder.encode(m.getMemPassword());
+		System.out.println("encyptPw = " + encyptPw);
+		
+		//int result = memberMapper.register(m);
+		int result = 1;
 		if(result == 1) {
 			rttr.addFlashAttribute("msgType" ,"성공 메세지");
 			rttr.addFlashAttribute("msg" ,"회원가입 성공했습니다 ");
@@ -128,7 +132,7 @@ public class MemberController {
 			rttr.addFlashAttribute("msg" ," 회원가입 실패 다시시도해주세요 ");
 			return "redirect:/member/memJoin.do";
 		}
-
+	
 	}
 	
 	
