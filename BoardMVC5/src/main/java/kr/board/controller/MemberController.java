@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import kr.board.entity.AuthVO;
 import kr.board.entity.Member;
 import kr.board.mapper.MemberMapper;
 
@@ -120,9 +122,25 @@ public class MemberController {
 		String encyptPw= pwEncoder.encode(m.getMemPassword());
 		System.out.println("encyptPw = " + encyptPw);
 		
-		//int result = memberMapper.register(m);
-		int result = 1;
+		m.setMemPassword(encyptPw);
+		
+		// 멤버회원 추가 됨 
+		int result = memberMapper.register(m);
+
 		if(result == 1) {
+			
+			// 멤버 생성 후 권한 테이블 생성 
+			List<AuthVO> list = m.getAuthList();
+			for(AuthVO vo : list) {
+				if(vo.getAuth() != null ) {
+					AuthVO auth = new AuthVO();
+					auth.setMemID(m.getMemID());
+					auth.setAuth(vo.getAuth()); // ROLE_USER, ROLE_ADMIN.. 
+					System.out.println("auth = " + auth);
+					memberMapper.authInsert(auth);
+				}
+			}
+			
 			rttr.addFlashAttribute("msgType" ,"성공 메세지");
 			rttr.addFlashAttribute("msg" ,"회원가입 성공했습니다 ");
 			session.setAttribute("mvo", m);
