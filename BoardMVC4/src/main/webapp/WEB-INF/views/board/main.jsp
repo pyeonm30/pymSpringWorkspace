@@ -23,6 +23,7 @@
     <div class="panel-body" id="view">Panel Content</div>
     <div class="panel-body" id="wfrom" style="display: none">
      <form id="frm">
+          <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>  
       <input type="hidden" name="memID" id="memID" value="${mvo.memID}"/>
       <table class="table">
          <tr>

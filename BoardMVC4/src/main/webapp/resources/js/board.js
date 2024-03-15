@@ -1,4 +1,6 @@
 let memID = '';
+let csrfTokenValue= document.querySelector("#csrf").value;
+let csrfTokenName= document.querySelector("#csrf").name;
 
 function loadData(mvoID) {
   memID = mvoID;
@@ -105,7 +107,8 @@ function goInsert() {
         memID: memID,
         title: form.title.value,
         content: form.content.value,
-        writer: form.writer.value
+        writer: form.writer.value,
+        [csrfTokenName]: csrfTokenValue
       })
     })
     .then(loadList)
