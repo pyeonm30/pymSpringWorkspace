@@ -1,5 +1,11 @@
 package kr.board.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import kr.board.entity.Member;
 import kr.board.mapper.MemberMapper;
@@ -162,7 +171,6 @@ public class MemberController {
 		}
 
 	}
-
 	
 	// 회원 사진 등록 
 	@GetMapping("/memImageForm.do")
@@ -170,6 +178,42 @@ public class MemberController {
 		return "/member/memImageForm";
 	}
 	
+	@PostMapping("/memImageUpdate.do")
+	public String memImageUpdate(HttpServletRequest request, HttpSession session, RedirectAttributes rttr) {
+		MultipartRequest multi = null;
+		int fileMaxSize = 10*1024*1024; // 10MB
+		String savePath = request.getSession().getServletContext().getRealPath("resources/upload");
+		Path uploadDirectory = Paths.get(savePath);
+		if(!Files.exists(uploadDirectory)) { // 업로드 폴더 없으면 생성 
+			try {
+				Files.createDirectory(uploadDirectory);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		// 이미지 업로드 
+		try {
+			multi = new MultipartRequest(request, savePath, fileMaxSize, "UTF-8" , new DefaultFileRenamePolicy());
+			
+			String memID = multi.getParameter("memID");
+			File file = multi.getFile("memProfile");
+			if(file.exists()) {
+				System.out.println("저장완료 ");
+				System.out.println("저장 경로 " + savePath);
+			}
+			
+			
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		return "redirect:/";
+	}
 	
 	
 	
