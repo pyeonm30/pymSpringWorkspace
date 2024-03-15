@@ -26,7 +26,7 @@ public class Member {
 		  if(memID == null || memID.equals("") ) return false;
 		  if(memName == null || memName.equals("") ) return false;
 		  if(memAge  < 1 || memAge > 100 ) return false;
-		  if(authList.size() == 0 ) return false;
+		  if(authList== null || authList.size() == 0 ) return false;
 		  if(memGender == null || memGender.equals("") ) return false;
 		  if(memEmail == null || memEmail.equals("") ) return false;
 		  return true;

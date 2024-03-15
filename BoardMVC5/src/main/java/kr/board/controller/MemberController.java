@@ -71,17 +71,30 @@ public class MemberController {
 			return "redirect:/member/memLoginForm.do";
 		}
 		
-		Member mvo = memberMapper.memLogin(m);
+		
+		Member mvo = memberMapper.memLogin(m); // 암호화된 패스워드 
 		if(mvo == null) {
 			rttr.addFlashAttribute("msgType" ," 로그인 실패");
 			rttr.addFlashAttribute("msg" ,"로그인 정보가 없습니다 ");
 			
 			return "redirect:/member/memLoginForm.do";
 		}
-		// 로그인 성공 
-		session.setAttribute("mvo", mvo);
-		rttr.addFlashAttribute("msgType" ,"성공 메세지");
-		rttr.addFlashAttribute("msg" ,"로그인 성공 했습니다  ");
+		
+		// 사용자가 입력받은 값을 다시 암호화 
+		pwEncoder.encode(m.getMemPassword());
+		
+		// db 암호화 코드 == 사용자 입력한 암호화 코드 비교 
+		if(pwEncoder.matches(m.getMemPassword(), mvo.getMemPassword())) {
+			// 로그인 성공 
+			session.setAttribute("mvo", mvo);
+			rttr.addFlashAttribute("msgType" ,"성공 메세지");
+			rttr.addFlashAttribute("msg" ,"로그인 성공 했습니다  ");
+		}else {
+			rttr.addFlashAttribute("msgType" ,"실패 메세지");
+			rttr.addFlashAttribute("msg" ,"비밀번호 불일치  ");
+			return "redirect:/member/memLoginForm.do";
+		}
+	
 		
 		return "redirect:/";
 	}
