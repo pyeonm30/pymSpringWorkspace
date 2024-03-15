@@ -29,13 +29,27 @@
 	            <li><a href="${cp}/member/memImageForm.do"><span class="glyphicon glyphicon glyphicon-picture"></span> 사진등록</a></li> 
 	            <li><a href="${cp}/member/memLogout.do"><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a></li>            
 	            <c:if test="${!empty mvo}">
-			    <c:if test="${empty mvo.memProfile}">
-			      <li><img class="img-circle profile-img" src="${cp}/resources/images/person.PNG" style="width: 40px; height: 40px "/></li>
-			      <li style="height: 60px; line-height: 60px;" >${mvo.memName} 님 </li>
+				  <c:if test="${empty mvo.memProfile}">
+			      <li><img class="img-circle" src="${contextPath}/resources/images/person.PNG" style="width: 50px; height: 50px"/> ${mvo.memName} 님
+			      (
+			       <c:forEach var="authVO" items="${mvo.authList}">
+			          <c:if test="${authVO.auth eq 'ROLE_USER'}">U</c:if>
+			          <c:if test="${authVO.auth eq 'ROLE_MANAGER'}">M</c:if>
+			          <c:if test="${authVO.auth eq 'ROLE_ADMIN'}">A</c:if>
+			       </c:forEach>			      
+			       )</li>
 			    </c:if>
 			    <c:if test="${!empty mvo.memProfile}">
-			      <li><img class="img-circle profile-img" src="resources/upload/${mvo.memProfile}" style="width: 40px; height: 40px" /> ${mvo.memName} 님</li>
-			    </c:if>			  
+			      <li><img class="img-circle" src="resources/upload/${mvo.memProfile}" style="width: 50px; height: 50px"/> ${mvo.memName} 님
+			      (
+			      <c:forEach var="authVO" items="${mvo.authList}">
+			          <c:if test="${authVO.auth eq 'ROLE_USER'}">U</c:if>
+			          <c:if test="${authVO.auth eq 'ROLE_MANAGER'}">M</c:if>
+			          <c:if test="${authVO.auth eq 'ROLE_ADMIN'}">A</c:if>
+			      </c:forEach>	
+			      )</li>
+			    </c:if>			
+			    	  
 			  </c:if>
 	      </ul>
       </c:if>

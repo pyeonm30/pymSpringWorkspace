@@ -176,6 +176,7 @@ public class MemberController {
 		return member == null ? 1 : 0;
 	}
 	
+	// 회원 정보 수정 
 	@PostMapping("/memUpdate.do")  // @ModelAttribute  new Member(), setter
 	public String memUpdate( @ModelAttribute Member m, RedirectAttributes rttr ,
 		                      @RequestParam String memPassword1, String memPassword2, HttpSession session) {
@@ -195,10 +196,27 @@ public class MemberController {
 		m.setMemPassword(memPassword2);
 		System.out.println("update m = " + m );
 		
+		// 비번 암호화 
+		m.setMemPassword(pwEncoder.encode(m.getMemPassword()));
+		
 		int result = memberMapper.memUpdate(m);
 		if(result == 1) {
 			rttr.addFlashAttribute("msgType" ,"성공 메세지");
 			rttr.addFlashAttribute("msg" ,"회원 정보 수정완료  ");
+			
+			// 기존 권한 다 삭제 
+			memberMapper.authDelete(m.getMemID());
+			
+			// 다시 새로운 권한 추가 
+			List<AuthVO> list = m.getAuthList();
+			for(AuthVO vo : list) {
+				if(vo.getAuth() != null ) {
+					AuthVO auth = new AuthVO();
+					auth.setMemID(m.getMemID());
+					auth.setAuth(vo.getAuth()); // ROLE_USER, ROLE_ADMIN.. 
+					memberMapper.authInsert(auth);
+				}
+			}
 			
 			// 회원 정보업데이트 된 세션으로 재등록 
 			session.setAttribute("mvo", m);
@@ -217,6 +235,7 @@ public class MemberController {
 	public String memImageForm() {
 		return "/member/memImageForm";
 	}
+	
 	
 	@PostMapping("/memImageUpdate.do")
 	public String memImageUpdate(HttpServletRequest request,HttpSession session, RedirectAttributes rttr) {
