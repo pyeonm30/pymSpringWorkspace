@@ -15,7 +15,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="${cp}/">Home</a></li>
-        <li><a href="boardMain.do">게시판</a></li>            
+        <li><a href="${cp}/boardMain.do">게시판</a></li>            
       </ul>
       <c:if test="${empty mvo}">
 	      <ul class="nav navbar-nav navbar-right">
