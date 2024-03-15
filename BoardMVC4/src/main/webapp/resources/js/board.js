@@ -137,19 +137,15 @@ function goContent(idx) {
   } else {
     contentRow.style.display = "none";
 
-    fetch(`boards/${idx}`, {
-        method: "PUT",
-      })
-      .then(response => response.json())
-      .catch(error => {
-        console.error("Error occurred while processing the request:", error);
-      });
   }
 }
 
 function goDelete(idx) {
-  fetch(`boards/${idx}?${csrfTokenName}=${csrfTokenValue}`, {
+  fetch(`boards/${idx}`, {
       method: "DELETE",
+      headers: {
+        "X-CSRF-TOKEN": csrfTokenValue,
+      },
     })
     .then(loadList)
     .catch(error => {
